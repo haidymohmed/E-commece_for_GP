@@ -99,12 +99,13 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        LocaleKeys.healthFood.tr(),
+                        "All you need is \nhere",
+
                         style: UserTheme.get(
                             context: context,
                             fontSize: UserResponsive.get(
                                 context: context,
-                                mobile: 17.sp,
+                                mobile: 16.sp,
                                 tablet: 15.sp
                             ),
                             fontWight: FontWeight.w900,
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black,
                         ),
                         child: Text(
-                          LocaleKeys.viewOurMenu.tr(),
+                          "View All",
                           textAlign: TextAlign.center,
                           style: UserTheme.get(
                               context: context,

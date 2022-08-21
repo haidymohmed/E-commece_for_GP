@@ -44,7 +44,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      LocaleKeys.hello.tr() +"\nHaidy",
+                      LocaleKeys.hello.tr() +"\nOday Kamal",
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                           fontSize: 18,

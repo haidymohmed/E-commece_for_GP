@@ -79,7 +79,7 @@ class _MyOrdersState extends State<MyOrders> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        "Mix Grill seafood",
+                                                        "OPPO A96",
                                                         style: UserTheme.get(
                                                             context: context,
                                                             fontSize: 15.sp,
@@ -92,7 +92,7 @@ class _MyOrdersState extends State<MyOrders> {
                                                         "delivered",
                                                         style:  UserTheme.get(
                                                             context: context,
-                                                            fontSize: 13.sp,
+                                                            fontSize: 12.sp,
                                                             fontWight: FontWeight.w700,
                                                             colorBright: AppColor.primaryColor,
                                                             colorDark: AppColor.primaryColor
@@ -102,7 +102,7 @@ class _MyOrdersState extends State<MyOrders> {
                                                         "15/8 03:20",
                                                         style: UserTheme.get(
                                                             context: context,
-                                                            fontSize: 13.sp,
+                                                            fontSize: 12.sp,
                                                             fontWight: FontWeight.w700,
                                                             colorBright: AppColor.grey,
                                                             colorDark: AppColor.grey

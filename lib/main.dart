@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/core/services/services.dart';
-import 'package:ecommerce/features/home/home.dart';
+import 'package:ecommerce/core/constant/color.dart';
 import 'package:ecommerce/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,12 +49,26 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           translations: MyTranslation(),
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
           locale: controller.language,
           //theme: controller.appTheme,
           initialBinding: MyBinding(),
           getPages: routes,
           theme: ThemeData(
+              fontFamily: "PlayfairDisplay",
+              textTheme: TextTheme(
+                  headline1: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20.sp, color: AppColor.black),
+                  headline2: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 26.sp, color: AppColor.black),
+                  bodyText1: TextStyle(
+                      height: 2.sp,
+                      color: AppColor.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14
+                  ),
+                  bodyText2: TextStyle(color: AppColor.grey, fontSize: 14.sp)
+              ),
+              primarySwatch: Colors.blue,
               brightness: Provider.of<UserDarkTheme>(context).isDark ? Brightness.dark : Brightness.light
           ),
           useInheritedMediaQuery: true,

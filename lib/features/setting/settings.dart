@@ -39,7 +39,7 @@ class _SettingState extends State<Setting> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Haidy Mohmed",
+            "Oday Kamal",
             textAlign: TextAlign.center,
             style: UserTheme.get(
                 context : context,
@@ -55,7 +55,7 @@ class _SettingState extends State<Setting> {
           ),
         ),
         Text(
-          "haidy@mail.com",
+          "oday.kamal@mail.com",
           textAlign: TextAlign.center,
           style : UserTheme.get(
               context : context,
