@@ -6,6 +6,5 @@ class AppColor {
   static const Color primaryColor = Color(0xff5DB1DF);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
-  static Color background = HexColor("#F3F3F3");
-
+  static Color background = Colors.grey.shade200;
 }

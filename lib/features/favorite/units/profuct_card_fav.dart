@@ -2,7 +2,8 @@ import 'package:badges/badges.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/view/wedget/product_card.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../../controller/favorite.dart';
 import '../../../core/constant/color.dart';
 
 // ignore: must_be_immutable
@@ -18,7 +19,7 @@ class ProductCardFav extends StatelessWidget {
       elevation: 0,
       badgeContent: InkWell(
           onTap: () {
-            //FavoriteCubit.get(context).deleteFromFavorite(displayFavorite.favorites[index]);
+            Provider.of<FavoriteTest>(context , listen: false).deleteProduct(product);
           },
           child: const Center(
             child: Icon(

@@ -1,12 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:ecommerce/core/dialogs/AppToast.dart';
+import 'package:ecommerce/features/card/domain/card_display/card_cubit.dart';
+import 'package:ecommerce/features/card/domain/card_display/card_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
-
+import 'package:sizer/sizer.dart';
+import '../../controller/card.dart';
 import '../../core/constant/color.dart';
 import '../../core/functions/CustomerTheme.dart';
 import '../../core/functions/user_responsive.dart';
@@ -46,7 +46,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           .width,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage(
+                              image: NetworkImage(
                                   widget.product.image
                               ),
                               fit: BoxFit.cover
@@ -133,11 +133,27 @@ class _ProductDetailsState extends State<ProductDetails> {
             // ignore: prefer_const_constructors, prefer_const_constructors
             vertical: 15
           ),
-          child: UserButton(
-              title: "Add (1) To Card - ${widget.product.price.toString()} Egp",
-              color: AppColor.primaryColor,
-              method: (){
+          child: BlocListener<CardCubit , CardStatus>(
+            listener: (context , status){
+              if(status is CardAddedSuccessfully){
+                showToastError(
+                  msg: "Product Added Successfully",
+                  state: ToastedStates.SUCCESS
+                );
+              }else if( status is CardProcessFailed){
+                showToastError(
+                    msg: status.error.toString(),
+                    state: ToastedStates.ERROR
+                );
               }
+            },
+            child: UserButton(
+                title: "Add (1) To Card - ${widget.product.price.toString()} Egp",
+                color: AppColor.primaryColor,
+                method: () async{
+                  Provider.of<CardTest>(context , listen: false).addProduct(widget.product) ;
+                }
+            ),
           ),
         ),
       )

@@ -35,12 +35,17 @@ class OrderCard extends StatelessWidget {
                 )
             ),
           ),
-          /*
-                  for(var i = 0 ; i < displayCard.card.length ; i++)
-                    getCustomRow(displayCard.card[i]),
-
-                   */
-
+          // ignore: sized_box_for_whitespace
+          Container(
+            height: Provider.of<CardTest>(context).products.length * 100,
+            width: MediaQuery.of(context).size.width,
+            child:  ListView.builder(
+              itemCount: Provider.of<CardTest>(context).products.length,
+              itemBuilder: (context , index){
+                return OrderItemWidget( product: Provider.of<CardTest>(context).products[index],) ;
+              },
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(
                 top: UserResponsive.get(context: context, mobile: 20.sp, tablet: 5.sp),
@@ -62,7 +67,7 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "0 EGP",
+                  "${Provider.of<CardTest>(context).total} EGP",
                   style: UserTheme.get(
                       context: context,
                       fontSize: 15.sp,

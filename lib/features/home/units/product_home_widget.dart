@@ -15,10 +15,20 @@ class ProductWidgetHome extends StatelessWidget {
       ),
       elevation: 0,
       badgeContent: InkWell(
-          onTap: () { },
+          onTap: () {
+            Provider.of<FavoriteTest>(context , listen: false).addProduct(product);
+          },
           child: Center(
-            child:  Icon(
+            child:  Provider.of<FavoriteTest>(context).containItem(product.id) == true? Icon(
               Icons.favorite ,
+              color: Colors.red,
+              size: UserResponsive.get(
+                  context: context,
+                  mobile: 12.sp,
+                  tablet: 13.sp
+              ),
+            ) : Icon(
+              Icons.favorite_border ,
               color: Colors.red,
               size: UserResponsive.get(
                   context: context,

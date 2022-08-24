@@ -1,6 +1,6 @@
 part of '../home_view.dart';
 class CategoryList extends StatelessWidget {
-  List<Category> categories = [
+  List<Category> categoriess = [
     Category(id: "0" , name: "Tablet", image: AppImageAsset.networkTestImage),
     Category(id: "0" , name: "Mobile", image: AppImageAsset.networkTestImage),
     Category(id: "0" , name: "Lap Top", image: AppImageAsset.networkTestImage),
@@ -10,33 +10,52 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: UserResponsive.get(
-            context: context,
-            mobile: UserResponsive.height(context) * 0.19,
-            tablet: UserResponsive.height(context) * 0.23
-        ),
-        padding: EdgeInsets.all(5.sp),
-        child: ListView.builder(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context , index){
-              return InkWell(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => CategoryScreen(category: categories[index])
-                      )
-                  );
-                },
-                child: CategoryWidget(
-                  category: categories[index],
+    return BlocBuilder<GetCategoriesCubit , CategoriesState>(
+      builder: (context , status){
+        if (status is GetCategoriesSuccessfully){
+          if(status.categories.isNotEmpty){
+            return Container(
+                width: MediaQuery.of(context).size.width,
+                height: UserResponsive.get(
+                    context: context,
+                    mobile: UserResponsive.height(context) * 0.19,
+                    tablet: UserResponsive.height(context) * 0.23
                 ),
-              );
-            }
-        )
+                padding: EdgeInsets.all(5.sp),
+                child: ListView.builder(
+                    itemCount: status.categories.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context , index){
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => CategoryScreen(category: status.categories[index])
+                              )
+                          );
+                        },
+                        child: CategoryWidget(
+                          category: status.categories[index],
+                        ),
+                      );
+                    }
+                )
+            );
+          }
+          else{
+            const Text("No Categories yet");
+          }
+        }
+        else if (status is GetCategoriesFailed){
+          return Text(status.error);
+        }
+        return const Center(
+          child: CircularProgressIndicator(
+            color: AppColor.primaryColor,
+          ),
+        );
+      },
     );
   }
 }

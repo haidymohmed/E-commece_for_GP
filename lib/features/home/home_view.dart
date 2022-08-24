@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/core/constant/color.dart';
 import 'package:ecommerce/core/constant/imageasset.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +15,14 @@ import '../../data/model/category.dart';
 import '../../data/model/product.dart';
 import '../../view/wedget/product_card.dart';
 import '../category screen/categories_view.dart';
-import '../product details/product_details.dart';
+import '../category screen/domain/category_products_cubit.dart';
+import '../category screen/domain/category_products_status.dart';
+import '../products/domain/products_cubit.dart';
+import '../products/products_screen.dart';
+import 'domin/categories/category_status.dart';
+import 'package:provider/provider.dart';
+import '../../../controller/favorite.dart';
+import 'domin/categories/category_cubit.dart';
 part 'units/categories_list.dart';
 part 'units/section_title.dart';
 part 'units/category_widget.dart';
@@ -25,16 +34,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage> {
-  Product product = Product(
-      id: "0",
-      name: "Tablet",
-      description: "Nokia T20 Android 11 4G Tablet with 10.36 Inch, 4GB RAM/64GB ROM, 8200mAh Battery, 8MP + 5MP Camera, Stereo Speaker, Dual Microphone, Metal Housing - Ocean Blue + Free Cover and Screen protector ",
-      image: AppImageAsset.networkTestImage,
-      price: 120,
-      discount: 12,
-      isFav: true,
-      brand: "SAMSUNG"
-  );
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -50,24 +49,50 @@ class _HomePageState extends State<HomePage> {
           isTrailing: true,
           trailing: LocaleKeys.seeMore.tr(),
           onTap: (){
+            DisplayProductsCubit.get(context).getBestSeller(descending: true);
+            Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsScreen(
+              title: LocaleKeys.bestSeller.tr(),
+              filter: (){
+                if(DisplayProductsCubit.get(context).descending){
+                  DisplayProductsCubit.get(context).getNewArrivals(descending: false);
+                  setState(() {
+                    DisplayProductsCubit.get(context).descending = false ;
+                  });
+                }else{
+                  DisplayProductsCubit.get(context).getBestSeller(descending: false);
+                  setState(() {
+                    DisplayProductsCubit.get(context).descending = true ;
+                  });
+                }
+              },
+            )));
           },
         ),
-        Container(
-            width: MediaQuery.of(context).size.width ,
-            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp)
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ProductWidgetHome(product: product),
-                ),
-                Expanded(
-                  child: ProductWidgetHome(product: product),
-                ),
-              ],
-            )
+        BlocBuilder<CategoryScreenUseCase , CategoriesScreenState>(
+          builder: (context , status){
+            if(status is ProductsCategoryFilterSuccessfully){
+              return Container(
+                  width: MediaQuery.of(context).size.width ,
+                  padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp)
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ProductWidgetHome(product: status.products[0]),
+                      ),
+                      Expanded(
+                        child: ProductWidgetHome(product: status.products[1]),
+                      ),
+                    ],
+                  )
+              );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -172,26 +197,54 @@ class _HomePageState extends State<HomePage> {
           title: LocaleKeys.newArrival.tr(),
           isTrailing: true,
           trailing: LocaleKeys.seeMore.tr(),
-          onTap: (){
+          onTap: ()async{
+            await DisplayProductsCubit.get(context).getNewArrivals(descending: true);
+            // ignore: use_build_context_synchronously
+            Navigator.push(context, MaterialPageRoute(builder: (_) => ProductsScreen(
+              title: LocaleKeys.newArrival.tr(),
+              filter: (){
+                if(DisplayProductsCubit.get(context).descending){
+                  DisplayProductsCubit.get(context).getNewArrivals(descending: false);
+                  setState(() {
+                    DisplayProductsCubit.get(context).descending = false ;
+                  });
+                }else{
+                  DisplayProductsCubit.get(context).getNewArrivals(descending: false);
+                  setState(() {
+                    DisplayProductsCubit.get(context).descending = true ;
+                  });
+                }
+              },
+            )));
           },
         ),
-        Container(
-            width: MediaQuery.of(context).size.width ,
-            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp)
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ProductWidgetHome(product: product),
-                ),
-                Expanded(
-                  child: ProductWidgetHome(product: product),
-                ),
-              ],
-            )
-        )
+
+        BlocBuilder<CategoryScreenUseCase , CategoriesScreenState>(
+          builder: (context , status){
+            if(status is ProductsCategoryFilterSuccessfully){
+              return Container(
+                  width: MediaQuery.of(context).size.width ,
+                  padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp)
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ProductWidgetHome(product: status.products[0]),
+                      ),
+                      Expanded(
+                        child: ProductWidgetHome(product: status.products[1]),
+                      ),
+                    ],
+                  )
+              );
+            }
+            else{
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ],
     );
   }

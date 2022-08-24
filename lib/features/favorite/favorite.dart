@@ -1,3 +1,4 @@
+import 'package:ecommerce/controller/favorite.dart';
 import 'package:ecommerce/features/favorite/units/profuct_card_fav.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _FavoritePageState extends State<FavoritePage> {
       price: 120,
       discount: 12,
       isFav: true,
-      brand: "SAMSUNG"
+      brand: "SAMSUNG", categoryId: ''
   );
 
   @override
@@ -37,11 +38,11 @@ class _FavoritePageState extends State<FavoritePage> {
                   Expanded(
                     child: GridView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: 5,
+                        itemCount: Provider.of<FavoriteTest>(context).products.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2, childAspectRatio: 0.83),
                         itemBuilder: (_, index) {
-                          return ProductCardFav(product: product);
+                          return ProductCardFav(product: Provider.of<FavoriteTest>(context).products[index]);
                         }
                     ),
                   )

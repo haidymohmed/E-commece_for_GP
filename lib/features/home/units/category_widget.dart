@@ -5,21 +5,26 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => CategoryScreen(category: category)
-            )
-        );
+      onTap: () async{
+        try{
+          await CategoryScreenUseCase.get(context).filterProductWithHighPrice(id: category.id);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => CategoryScreen(category: category)
+              )
+          );
+        }on FirebaseException catch (e){
+          print(e.message.toString());
+        }
       },
       child: Container(
         width: UserResponsive.get(
             context: context,
-            mobile: UserResponsive.width(context) * 0.34,
+            mobile: MediaQuery.of(context).size.width * 0.25,
             tablet: UserResponsive.width(context) * 0.27
         ),
-        height: MediaQuery.of(context).size.height * 0.19,
+        height: MediaQuery.of(context).size.width * 0.25,
         margin: EdgeInsets.all(3.sp),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,17 +32,15 @@ class CategoryWidget extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                height: MediaQuery.of(context).size.width * 0.25,
-
+                width: MediaQuery.of(context).size.width * 0.20,
+                height: MediaQuery.of(context).size.width * 0.20,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
+                    image: NetworkImage(
                       category.image,
                     ),
                     fit: BoxFit.cover
                   ),
-                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.25 /2),
                 ),
               ),
             ) ,

@@ -1,3 +1,4 @@
+import 'package:ecommerce/controller/order.dart';
 import 'package:ecommerce/core/constant/color.dart';
 import 'package:ecommerce/core/constant/imageasset.dart';
 import 'package:ecommerce/features/orders/units/order_app_bar.dart';
@@ -28,7 +29,7 @@ class _MyOrdersState extends State<MyOrders> {
               Expanded(
                 child: SizedBox(
                   child: ListView.builder(
-                    itemCount: 400,
+                    itemCount: Provider.of<OrderTest>(context).products.length,
                     itemBuilder: (_ , index){
                       return Container(
                         width: MediaQuery.of(context).size.width,
@@ -47,8 +48,8 @@ class _MyOrdersState extends State<MyOrders> {
                                 flex: 3,
                                 child: LayoutBuilder(
                                     builder: (context, constraints) {
-                                      return  Image.asset(
-                                        AppImageAsset.networkTestImage,
+                                      return  Image.network(
+                                        Provider.of<OrderTest>(context).products[index].image,
                                         fit: BoxFit.fill,
                                         width: constraints.maxWidth,
                                         height: constraints.maxHeight,
@@ -79,7 +80,7 @@ class _MyOrdersState extends State<MyOrders> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        "OPPO A96",
+                                                        Provider.of<OrderTest>(context).products[index].name,
                                                         style: UserTheme.get(
                                                             context: context,
                                                             fontSize: 15.sp,

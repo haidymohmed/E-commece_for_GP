@@ -11,6 +11,8 @@ dependencies:
 
   flutter_swiper_null_safety: ^1.0.2
   cupertino_icons:
+  firebase_auth:
+  firebase_storage:
   flutter_slidable:
   get:
   http:

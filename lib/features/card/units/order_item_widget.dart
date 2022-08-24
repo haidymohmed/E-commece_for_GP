@@ -25,11 +25,7 @@ class OrderItemWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: UserResponsive.get(
-                    context: context,
-                    mobile: 2,
-                    tablet: 3
-                ),
+                flex: 3,
                 child: Padding(
                   padding:UserResponsive.get(
                       context: context,
@@ -64,85 +60,27 @@ class OrderItemWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                  flex: 3,
-                  child: Center(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                                constraints: BoxConstraints.tight(Size(15.sp,15.sp)),
-                                decoration: BoxDecoration(
-                                    color: AppColor.grey,
-                                    borderRadius: BorderRadius.circular(5.sp)
-                                ),
-                                child: InkWell(
-                                  onTap: (){
-                                    //IncDecItemCubit.get(context).decrementProduct(product);
-                                  },
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 15.sp,
-                                    color: AppColor.white,
-                                  ),
-                                )
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 4.sp , vertical: 5.sp),
-                              child: Text(
-                                product.price.toString(),
-                                style: UserTheme.get(
-                                    context: context,
-                                    fontSize: 13.sp,
-                                    fontWight: FontWeight.w500,
-                                    colorBright: AppColor.black,
-                                    colorDark: AppColor.white
-                                ),
-                              ),
-                            ),
-                            Container(
-                                constraints: BoxConstraints.tight(Size(15.sp,15.sp)),
-                                decoration: BoxDecoration(
-                                    color: AppColor.primaryColor,
-                                    borderRadius: BorderRadius.circular(5.sp)
-                                ),
-                                child: InkWell(
-                                  onTap: (){
-                                    //IncDecItemCubit.get(context).incrementProduct(product, context);
-                                  },
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 15.sp,
-                                    color: AppColor.white,
-                                  ),
-                                )
-                            ),
-                            SizedBox(width: 5.sp,),
-                            Container(
-                                constraints: BoxConstraints.tight(Size(15.sp,15.sp)),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: UserResponsive.get(
-                                        context: context,
-                                        mobile: 0.sp,
-                                        tablet: 5.sp
-                                    )
-                                ),
-                                child: InkWell(
-                                    onTap : (){
-                                      //CardCubit.get(context).deleteItemFromCard(product);
-                                    },
-                                    child : Icon(
-                                      Icons.delete,
-                                      size: UserResponsive.get(
-                                          context: context,
-                                          mobile: 17.sp,
-                                          tablet: 18.sp
-                                      ),
-                                      color: AppColor.grey,
-                                    )
-                                )
-                            )
-                          ]
+              Container(
+                  constraints: BoxConstraints.tight(Size(20.sp,20.sp)),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: UserResponsive.get(
+                          context: context,
+                          mobile: 0.sp,
+                          tablet: 5.sp
+                      )
+                  ),
+                  child: InkWell(
+                      onTap : (){
+                        Provider.of<CardTest>(context , listen: false).deleteProduct(product) ;
+                      },
+                      child : Icon(
+                        Icons.delete,
+                        size: UserResponsive.get(
+                            context: context,
+                            mobile: 17.sp,
+                            tablet: 18.sp
+                        ),
+                        color: AppColor.grey,
                       )
                   )
               )

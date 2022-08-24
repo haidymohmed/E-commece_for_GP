@@ -46,7 +46,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       return SizedBox(
                           width: constrains.maxWidth,
                           height: constrains.maxHeight,
-                          child: Image.asset(widget.product.image , fit: BoxFit.fill,)
+                          child: Image.network(widget.product.image , fit: BoxFit.fill,)
                       );
                     }
                 ),
@@ -80,7 +80,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                 MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                      "0 EGP",
+                                      "${widget.product.price}",
                                       style: UserTheme.get(
                                           context: context,
                                           fontSize: 13.sp,
@@ -90,7 +90,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                           colorBright: AppColor.primaryColor
                                       )
                                   ),
-                                  Text(" EGP",
+                                  Text(" JD",
                                       style: UserTheme.get(
                                           context: context,
                                           fontSize: 13.sp,
